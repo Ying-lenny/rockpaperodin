@@ -1,0 +1,97 @@
+<script>
+
+    let playerVictory = 0
+    let robotVictory = 0
+    
+    //Paper > Rock > Scissors > Paper
+    function playerWin() {
+        playerVictory++;
+        console.log("Player has won this round")
+        console.log("Current Tally: " + playerVictory + " vs " + robotVictory)
+    }
+
+    function robotWin() {
+        robotVictory++;
+        console.log("Robot has won this round")
+        console.log("Current Tally: " + playerVictory + " vs " + robotVictory)
+    }
+
+    function rockpaperOdin() {
+
+        let playerChoice = prompt("What hand do you choose to play?","rock")
+        let playerPlay = playerChoice.toLowerCase()
+
+        const robotChoices = ["rock","paper","scissors"]
+        let robotPlay = robotChoices[Math.floor(Math.random()*robotChoices.length)];
+
+        console.log("The player has chosen " + playerPlay)
+        console.log("The robot has chosen " + robotPlay)
+ 
+        //Draw
+        if (playerPlay === robotPlay) {
+            console.log("A Draw!, Play again!")
+        }
+
+        //Rock
+        if (playerPlay === "rock" && robotPlay === "paper") {
+            console.log("Player has lost, Paper beats rock")
+            playerWin()
+        } else if (playerPlay === "rock" && robotPlay === "scissors") {
+            console.log("Player has won, Rock beats scissors")
+            robotWin()
+        }
+        
+        //Paper
+        if (playerPlay === "paper" && robotPlay === "rock") {
+            console.log("Player has won, rock beats rockPaper")
+            playerWin()
+        } else if (playerPlay === "paper" && robotPlay === "scissors") {
+            console.log("Player has lost, scissors beats paper")
+            playerWin()
+        }
+
+        //Scissors
+        if (playerPlay === "scissors" && robotPlay === "rock") {
+            console.log("Player has lost, rock beats scissors")
+            playerWin()
+        } else if (playerPlay === "scissors" && robotPlay === "paper") {
+            console.log("Player has won, scissors beats paper")
+            playerWin()
+        }
+    }
+
+    //Runs the rockpaperOdin function 5 times after the button is pushed
+    function game() {
+        for (let i = 0; i < 5; i++) {
+            rockpaperOdin()
+            console.log("")
+        }
+
+        if (playerVictory === robotVictory) {
+            console.log("Nobody wins... go home")
+        } else if (playerVictory > robotVictory) {
+            console.log("Player wins... hooray")
+        } else if (playerVictory < robotVictory) {
+            console.log("Robot wins... stupid")
+        }
+
+        playerVictory = 0
+        robotVictory = 0
+    
+    }
+</script>
+
+
+<!-- HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper ODIN</title>
+</head>
+<body>
+    <butto onclick=game()>Click</button>
+</body>
+</html>
