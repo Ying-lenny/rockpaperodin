@@ -8,37 +8,61 @@
     <title>Rock Paper ODIN</title>
 </head>
 <body>
-    <div id="choiceAttack">
-        <button class="rockBtn">Rock</button>
-        <button class="paperBtn">Paper</button>
-        <button class="sciButton">Scissors</button>
+    <div class="choice-area">
+        <button class="rockBtn choiceAttack">Rock</button>
+        <button class="paperBtn choiceAttack">Paper</button>
+        <button class="sciBtn choiceAttack">Scissors</button>
     </div>
 
-    <div id="game-output">
-        <p>Current round: 0</p>
+    <div class="game-output">
+        <div class="game-results">
+            <p class="round">Round: 0</p>
+
+            <p class="match-results">Player has not chosen yet</p>
+            <h3>Lives remaining</h3>
+            <p class="health">Player: 5 vs Robot: 5</p>
+            <p></p>
+        </div>
     </div>
 </body>
 </html>
 
 <script>
 
-    const choiceButtons = document.querySelectorAll('#choiceAttack')
+    const choiceButtons = document.querySelectorAll('.choiceAttack')
+    const rounds = document.querySelector('.round')
+    const lives = document.querySelector('.health')
+    const match = document.querySelector('.match-results') 
 
-    let playerVictory = 5
-    let robotVictory = 5
+    let playerVictory = 5;
+    let robotVictory = 5;
+    let round = 0;
+
+    function countRounds() {
+        round += 1;
+        rounds.innerText = `Round: ${round}`;
+        return round;
+    }
 
     //Paper > Rock > Scissors > Paper
     function playerWin() {
         robotVictory--;
-        console.log("Player has won this round")
-        console.log("Current Tally: " + playerVictory + " vs " + robotVictory)
+        lives.innerText = `Player: ${playerVictory} vs Robot ${robotVictory}`
     }
 
     function robotWin() {
         playerVictory--;
-        console.log("Robot has won this round")
-        console.log("Current Tally: " + playerVictory + " vs " + robotVictory)
+        lives.innerText = `Player: ${playerVictory} vs Robot ${robotVictory}`
     }
+
+    // function finishGame(playerVictory, robotVictory) {
+    //     if (playerVictory === 0 || robotVictory === 0) {
+    //         choiceButtons.forEach((button) => {
+    //             button.setAttribute('disabled', '')
+    //             button.classList.add('disabled-button', 'opacity');
+    //         });
+    //     }
+    // }
 
     function rockpaperOdin() {
 
@@ -56,64 +80,44 @@
 
                 const robotChoices = ["rock","paper","scissors"]
                 let robotPlay = robotChoices[Math.floor(Math.random()*robotChoices.length)];
-
-                console.log("The robot has chosen " + robotPlay)
         
                 //Draw
                 if (chosenAttack === robotPlay) {
-                    console.log("A Draw!, Play again!")
+                    match.innerText = (`You both played ${chosenAttack}! A Draw! Play again!`)
                 }
 
                 //Rock
                 if (chosenAttack === "rock" && robotPlay === "paper") {
-                    console.log("Player has lost, Paper beats rock")
+                    match.innerText =(`The robot has chosen ${robotPlay}, Player has lost, Paper beats rock`)
                     robotWin()
                 } else if (chosenAttack === "rock" && robotPlay === "scissors") {
-                    console.log("Player has won, Rock beats scissors")
+                    match.innerText =(`The robot has chosen ${robotPlay}, Player has won, Rock beats scissors`)
                     playerWin()
                 }
                 
                 //Paper
                 if (chosenAttack === "paper" && robotPlay === "rock") {
-                    console.log("Player has won, rock beats paper")
+                    match.innerText =(`The robot has chosen ${robotPlay}, You won, rock beats paper`)
                     playerWin()
                 } else if (chosenAttack === "paper" && robotPlay === "scissors") {
-                    console.log("Player has lost, scissors beats paper")
+                    match.innerText =(`The robot has chosen ${robotPlay}, You lost, scissors beats paper`)
                     robotWin()
                 }
 
                 //Scissors
                 if (chosenAttack === "scissors" && robotPlay === "rock") {
-                    console.log("Player has lost, rock beats scissors")
+                    match.innerText =(`The robot has chosen ${robotPlay}, rock beats scissors`)
                     robotWin()
                 } else if (chosenAttack === "scissors" && robotPlay === "paper") {
-                    console.log("Player has won, scissors beats paper")
+                    match.innerText =(`The robot has chosen ${robotPlay}, scissors beats paper`)
                     playerWin()
                 }
 
                 console.log(" ")
+                countRounds();
+                // finishGame();
             });
         });
-    }
-
-    //Runs the rockpaperOdin function 5 times after the button is pushed
-    function game() {
-        for (let i = 0; i < 5; i++) {
-            rockpaperOdin()
-            console.log("")
-        }
-
-        if (playerVictory === robotVictory) {
-            console.log("Nobody wins... go home")
-        } else if (playerVictory > robotVictory) {
-            console.log("Player wins... hooray")
-        } else if (playerVictory < robotVictory) {
-            console.log("Robot wins... stupid")
-        }
-
-        playerVictory = 0
-        robotVictory = 0
-    
     }
 
     rockpaperOdin()

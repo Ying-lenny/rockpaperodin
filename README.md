@@ -2,6 +2,6 @@
 
 Rock, Paper, Scissors game made as on Odin Project assignment
 
-Runs in the console only
+Use the buttons in the browser to play
 
-Click the button to start
+Game does not end when lives run :(
